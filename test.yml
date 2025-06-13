@@ -1,0 +1,67 @@
+#aksauth
+
+trigger: none
+pr: none
+
+
+
+pool:
+  vmImage: ubuntu-latest
+
+
+
+parameters:
+
+ - name: akscluster
+   type: string
+   default: aks_cluster_1
+ - name: rgname
+   type: string
+   default: testrg
+
+
+
+
+
+
+  
+
+
+
+jobs: 
+
+  - job: aksjobfrontend_onlyaks
+    displayName: AKSJobfrontend-onlyaks
+    timeoutInMinutes: 3 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 2 # how much time to give 'run always even if cancelled tasks' before stopping them
+   
+    
+
+    steps:
+      - task: KubeloginInstaller@0
+        inputs:
+          kubeloginVersion: 'latest'
+        displayName: installkubelogin
+      
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'myaksfeb072025'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+           
+            az aks get-credentials --resource-group ${{ parameters.rgname }} --name ${{ parameters.akscluster }}
+            # kubelogin convert-kubeconfig -l azurecli
+      
+        
+        displayName: 'Get AKS credentials'
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'myaksfeb072025'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            
+            kubectl get pods 
+            
+        displayName: 'List AKS resources'
