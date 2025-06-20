@@ -14,7 +14,7 @@ parameters:
 
  - name: akscluster
    type: string
-   default: aks_cluster_1
+   default: aks-cluster-1
  - name: rgname
    type: string
    default: testrg
