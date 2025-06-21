@@ -43,26 +43,23 @@ jobs:
           kubeloginVersion: 'latest'
         displayName: installkubelogin
       
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'myaksfeb072025'
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
+    
+
+      - script: 
+        
            
             az aks get-credentials --resource-group ${{ parameters.rgname }} --name ${{ parameters.akscluster }} --admin
-            # kubelogin convert-kubeconfig
-            # kubelogin convert-kubeconfig -l azurecli
+         
       
         
-        displayName: 'Get AKS credentials'
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'myaksfeb072025'
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
+      #   displayName: 'Get AKS credentials'
+      # - task: AzureCLI@2
+      #   inputs:
+      #     azureSubscription: 'myaksfeb072025'
+      #     scriptType: 'bash'
+      #     scriptLocation: 'inlineScript'
+      #     inlineScript: |
             
-            kubectl get pods 
+      #       kubectl get pods 
             
-        displayName: 'List AKS resources'
+      #   displayName: 'List AKS resources'
