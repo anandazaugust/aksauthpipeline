@@ -51,7 +51,7 @@ jobs:
           inlineScript: |
            
             # az aks get-credentials --resource-group ${{ parameters.rgname }} --name ${{ parameters.akscluster }}
-            az aks get-credentials --resource-group testrg --name aks-cluster-1
+            kubelogin convert-kubeconfig
             # kubelogin convert-kubeconfig -l azurecli
       
         
