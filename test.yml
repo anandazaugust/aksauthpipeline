@@ -50,8 +50,8 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
            
-            az aks get-credentials --resource-group ${{ parameters.rgname }} --name ${{ parameters.akscluster }}
-            kubelogin convert-kubeconfig
+            az aks get-credentials --resource-group ${{ parameters.rgname }} --name ${{ parameters.akscluster }} --admin
+            # kubelogin convert-kubeconfig
             # kubelogin convert-kubeconfig -l azurecli
       
         
