@@ -52,7 +52,7 @@ jobs:
            
             az aks get-credentials --resource-group ${{ parameters.rgname }} --name ${{ parameters.akscluster }}
             kubelogin convert-kubeconfig
-            kubelogin convert-kubeconfig -l azurecli
+            # kubelogin convert-kubeconfig -l azurecli
       
         
         displayName: 'Get AKS credentials'
