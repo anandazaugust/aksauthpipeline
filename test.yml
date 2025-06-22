@@ -2,41 +2,15 @@
 
 trigger: none
 pr: none
-
-
-
 pool:
   vmImage: ubuntu-latest
 
-
-
-parameters:
-
- - name: akscluster
-   type: string
-   default: aks-cluster-1
- - name: rgname
-   type: string
-   default: testrg
-
-
-
-
-
-
-  
-
-
-
 jobs: 
 
-  - job: aksjobfrontend_onlyaks
-    displayName: AKSJobfrontend-onlyaks
+  - job: aksdeploy
+    displayName: AKSdepoy
     timeoutInMinutes: 3 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 2 # how much time to give 'run always even if cancelled tasks' before stopping them
-   
-    
-
     steps:
       - task: KubeloginInstaller@0
         inputs:
@@ -45,20 +19,18 @@ jobs:
       
       - task: AzureCLI@2
         inputs:
-          azureSubscription: 'myaksfeb072025'
+          azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: |
            
-            az aks get-credentials --resource-group ${{ parameters.rgname }} --name ${{ parameters.akscluster }} --admin
-            # kubelogin convert-kubeconfig
-            # kubelogin convert-kubeconfig -l azurecli
-      
+            az aks get-credentials --resource-group testrg --name aks-cluster-1 
+          
         
         displayName: 'Get AKS credentials'
       - task: AzureCLI@2
         inputs:
-          azureSubscription: 'myaksfeb072025'
+          azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: |
