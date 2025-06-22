@@ -25,6 +25,7 @@ jobs:
           inlineScript: |
            
             az aks get-credentials --resource-group testrg --name aks-cluster-1 
+            kubelogin convert-kubeconfig -l azurecli
           
         
         displayName: 'Get AKS credentials'
