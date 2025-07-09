@@ -45,7 +45,7 @@ jobs:
           inlineScript: |
             
             kubectl get pods 
-            kubectl apply -f $(Pipeline.Workspace)/aksyamls/namespace.yml
+            kubectl apply -f ./aksyamls/namespace.yml
             
         displayName: 'List AKS resources & create namespace'
 
@@ -57,7 +57,7 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
             
-            kubectl apply -f $(Pipeline.Workspace)/aksyamls/svc.yml
+            kubectl apply -f ./aksyamls/svc.yml
             
         displayName: 'Create Service Account'
 
