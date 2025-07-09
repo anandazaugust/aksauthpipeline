@@ -1,4 +1,11 @@
 #aksauth
+variables:
+  - name: USER_ASSIGNED_CLIENT_ID
+    value: 'a699272b-3aa5-439b-baae-6abec0abbcd6'
+  - name: SERVICE_ACCOUNT_NAME
+    value: 'kedasvc'
+  - name: SERVICE_ACCOUNT_NAMESPACE
+    value: 'keda112'
 
 trigger: none
 pr: none
@@ -30,6 +37,7 @@ jobs:
         
         displayName: 'Get AKS credentials'
       - task: AzureCLI@2
+
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -40,3 +48,17 @@ jobs:
             kubectl create namespace keda112
             
         displayName: 'List AKS resources & create namespace'
+
+      - task: AzureCLI@2
+
+        inputs:
+          azureSubscription: 'aks-svc-june22'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            
+            kubectl apply -f $(Pipeline.Workspace)/aksyamls/svc.yml
+            
+        displayName: 'Create Service Account'
+
+        
