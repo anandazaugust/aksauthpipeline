@@ -4,8 +4,8 @@ variables:
     value: 'a699272b-3aa5-439b-baae-6abec0abbcd6'
   - name: SERVICE_ACCOUNT_NAME
     value: 'kedasvc'
-  - name: SERVICE_ACCOUNT_NAMESPACE
-    value: 'keda112'
+  - name: NAMESPACE_NAME
+    value: 'keda113'
 
 trigger: none
 pr: none
@@ -45,7 +45,7 @@ jobs:
           inlineScript: |
             
             kubectl get pods 
-            kubectl create namespace keda112
+            kubectl apply -f $(Pipeline.Workspace)/aksyamls/namespace.yml
             
         displayName: 'List AKS resources & create namespace'
 
