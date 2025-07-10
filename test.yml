@@ -87,26 +87,19 @@ jobs:
             helm repo list
             
         displayName: 'helm repo add kedacore'
-
-      - task: HelmDeploy@1
+      - task: AzureCLI@2
+        displayName: 'Install KEDA'
         inputs:
           azureSubscription: 'aks-svc-june22'
-          connectionType: 'Azure Resource Manager'
-          azureResourceGroup: 'testrg'
-          namespace: $(NAMESPACE_NAME)
-          kubernetesCluster: 'aks-cluster-1'
-          command: 'upgrade'
-          chartType: 'Name'
-          chartName: 'kedacore/keda'
-          releaseName: 'keda'
-          overrideValues: |
-            serviceAccount.create=false
-            serviceAccount.name=$(SERVICE_ACCOUNT_NAME)
-        
-            podIdentity.azureWorkloadIdentity.enabled=true
-            podIdentity.azureWorkloadIdentity.clientId=$(USER_ASSIGNED_CLIENT_ID)
-            podIdentity.azureWorkloadIdentity.tenantId=$(TENANT_ID)
-        displayName: 'Install KEDA using Helm'
-      
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            
+            helm install keda kedacore/keda --namespace keda113 \
+            --set serviceAccount.create=false \
+            --set serviceAccount.name=keda-operator \
+            --set podIdentity.azureWorkload.enabled=true \
+            --set podIdentity.azureWorkload.clientId=$USER_ASSIGNED_CLIENT_ID \
+            --set podIdentity.azureWorkload.tenantId=$TENANT_ID
 
         
