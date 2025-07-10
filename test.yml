@@ -84,6 +84,7 @@ jobs:
             
             helm repo add kedacore https://kedacore.github.io/charts
             helm repo update
+            helm repo list
             
         displayName: 'helm repo add kedacore'
 
@@ -94,7 +95,7 @@ jobs:
           azureResourceGroup: 'testrg'
           namespace: $(NAMESPACE_NAME)
           kubernetesCluster: 'aks-cluster-1'
-          command: 'install'
+          command: 'upgrade'
           chartType: 'Name'
           chartName: 'kedacore/keda'
           releaseName: 'keda'
