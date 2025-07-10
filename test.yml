@@ -70,6 +70,11 @@ jobs:
             
         displayName: 'Create Service Account'
 
+      - task: helmInstaller@1
+        inputs:
+          helmVersionToInstall: 'latest'
+        displayName: 'Install Helm'
+
       - task: AzureCLI@2
         inputs:
           azureSubscription: 'aks-svc-june22'
@@ -82,7 +87,7 @@ jobs:
             
         displayName: 'helm repo add kedacore'
 
-      - task: helmdeploy@1
+      - task: HelmDeploy@1
         inputs:
           azureSubscription: 'aks-svc-june22'
           connectionType: 'Azure Resource Manager'
@@ -97,9 +102,9 @@ jobs:
             serviceAccount.create=false
             serviceAccount.name=$(SERVICE_ACCOUNT_NAME)
         
-            podIdentity.azureworkloadIdentity.enabled=true
-            podIdentity.azureworkloadIdentity.clientId=$(USER_ASSIGNED_CLIENT_ID)
-            podIdentity.azureworkloadIdentity.tenantId=$(TENANT_ID)
+            podIdentity.azureWorkloadIdentity.enabled=true
+            podIdentity.azureWorkloadIdentity.clientId=$(USER_ASSIGNED_CLIENT_ID)
+            podIdentity.azureWorkloadIdentity.tenantId=$(TENANT_ID)
         displayName: 'Install KEDA using Helm'
       
 
