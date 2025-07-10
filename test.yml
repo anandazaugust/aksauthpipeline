@@ -85,7 +85,8 @@ jobs:
       - task: helmdeploy@1
         inputs:
           azureSubscription: 'aks-svc-june22'
-          kubernetesServiceEndpoint: 'aks-svc-june22'
+          connectionType: 'Azure Resource Manager'
+          azureResourceGroup: 'testrg'
           namespace: $(NAMESPACE_NAME)
           command: 'install'
           chartType: 'Name'
