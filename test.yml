@@ -65,7 +65,7 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
             
-            kubectl apply -f ./aksyamls/svc.yml
+            kubectl apply -f ./aksyamls/svc.yml -n $(NAMESPACE_NAME)
             
         displayName: 'Create Service Account'
 
