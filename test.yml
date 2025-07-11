@@ -101,5 +101,28 @@ jobs:
             --set podIdentity.azureWorkload.enabled=true \
             --set podIdentity.azureWorkload.clientId=$USER_ASSIGNED_CLIENT_ID \
             --set podIdentity.azureWorkload.tenantId=$TENANT_ID
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'aks-svc-june22'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            
+            kubectl apply -f ./aksyamls/myapp.yml -n $(NAMESPACE_NAME)
+            
+            
+           
+            
+        displayName: 'apply myapp manifest'
 
         
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'aks-svc-june22'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            
+            kubectl apply -f ./aksyamls/scaledobj.yml -n $(NAMESPACE_NAME)
+
+        displayName: 'apply scaled object manifest'
