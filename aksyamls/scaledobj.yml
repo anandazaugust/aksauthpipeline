@@ -4,7 +4,7 @@ metadata:
   name: azure-managed-prometheus-trigger-auth
 spec:
   podIdentity:
-      provider: azure # use "azure" for pod identity and "azure-workload" for workload identity
+      provider: azure-workload # use "azure" for pod identity and "azure-workload" for workload identity
       identityId: #{USER_ASSIGNED_CLIENT_ID}#  
 ---
 apiVersion: keda.sh/v1alpha1
