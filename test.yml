@@ -126,10 +126,7 @@ jobs:
             --set podIdentity.azureWorkload.enabled=true \
             --set podIdentity.azureWorkload.clientId=$USER_ASSIGNED_CLIENT_ID \
             --set podIdentity.azureWorkload.tenantId=$TENANT_ID
-            --set release-name=keda
-            --set release-namespace=keda113
-            --set managed-by=true
-
+          
 
 
       - task: AzureCLI@2

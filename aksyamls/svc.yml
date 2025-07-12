@@ -3,5 +3,10 @@ kind: ServiceAccount
 metadata:
   annotations:
     azure.workload.identity/client-id: #{USER_ASSIGNED_CLIENT_ID}#
+    meta.helm.sh/release-name: keda
+    meta.helm.sh/release-namespace: keda113
+  labels:
+    app.kubernetes.io/managed-by: Helm
+
   name: #{SERVICE_ACCOUNT_NAME}#
   namespace: #{NAMESPACE_NAME}#
