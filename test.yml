@@ -112,7 +112,7 @@ jobs:
             
         displayName: 'helm repo add kedacore'
       - task: AzureCLI@2
-        condition: ${{ eq(parameters.deploykeda, true) }}
+        condition: ${{ eq(parameters.deployhelm, true) }}
         displayName: 'Install KEDA'
         inputs:
           azureSubscription: 'aks-svc-june22'
