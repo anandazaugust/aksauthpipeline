@@ -13,6 +13,21 @@ parameters:
   - name: deployScaledObject
     type: boolean
     default: true
+  - name: deploymyapp
+    type: boolean
+    default: true
+  - name: deployhelm
+    type: boolean
+    default: true 
+  - name: deploynamespace
+    type: boolean
+    default: true
+  - name: deployserviceaccount 
+    type: boolean
+    default: true 
+  - name: deploykeda
+    type: boolean
+    default: true
 
 trigger: none
 pr: none
@@ -111,6 +126,8 @@ jobs:
             --set podIdentity.azureWorkload.enabled=true \
             --set podIdentity.azureWorkload.clientId=$USER_ASSIGNED_CLIENT_ID \
             --set podIdentity.azureWorkload.tenantId=$TENANT_ID
+
+
       - task: AzureCLI@2
         condition: parameters['deploymyapp'] == 'true'
         inputs:
