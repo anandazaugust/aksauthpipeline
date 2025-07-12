@@ -120,7 +120,7 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
             
-            helm install keda kedacore/keda --namespace keda113 \
+            helm upgrade --install keda kedacore/keda --namespace keda113 \
             --set serviceAccount.create=false \
             --set serviceAccount.name=$(SERVICE_ACCOUNT_NAME) \
             --set podIdentity.azureWorkload.enabled=true \
