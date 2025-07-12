@@ -67,7 +67,7 @@ jobs:
         displayName: 'Replace variables Name in Manifest'
 
       - task: AzureCLI@2
-        condition: parameters['deploynamespace'] == 'true'
+        condition:  ${{ eq(parameters.deploynamespace, true) }})
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -80,7 +80,7 @@ jobs:
         displayName: 'List AKS resources & create namespace'
 
       - task: AzureCLI@2
-        condition: parameters['deployserviceaccount'] == 'true'
+        condition:  ${{ eq(parameters.deployserviceaccount, true) }})
 
         inputs:
           azureSubscription: 'aks-svc-june22'
@@ -93,13 +93,13 @@ jobs:
         displayName: 'Create Service Account'
 
       - task: helmInstaller@1
-        condition: parameters['deployhelm'] == 'true'
+        condition:  ${{ eq(parameters.deployhelm, true) }})
         inputs:
           helmVersionToInstall: 'latest'
         displayName: 'Install Helm'
 
       - task: AzureCLI@2
-        condition: parameters['deployhelm'] == 'true'
+        condition: ${{ eq(parameters.deployhelm, true) }})
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -112,7 +112,7 @@ jobs:
             
         displayName: 'helm repo add kedacore'
       - task: AzureCLI@2
-        condition: parameters['deployhelm'] == 'true'
+        condition: ${{ eq(parameters.deployhelm, true) }})
         displayName: 'Install KEDA'
         inputs:
           azureSubscription: 'aks-svc-june22'
@@ -129,7 +129,7 @@ jobs:
 
 
       - task: AzureCLI@2
-        condition: parameters['deploymyapp'] == 'true'
+        condition: ${{ eq(parameters.deploymyapp, true) }})
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -145,7 +145,7 @@ jobs:
 
         
       - task: AzureCLI@2
-        condition: parameters['deployScaledObject'] == 'true'
+        condition: ${{ eq(parameters.deployscaledobject, true) }})
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
