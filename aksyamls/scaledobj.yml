@@ -21,8 +21,10 @@ spec:
     metadata:
       serverAddress: https://monitor114-a6dgb9dab8grhbdh.eastus.prometheus.monitor.azure.com
       metricName: http_requests_total
-      query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
-      threshold: '100.50'
-      activationThreshold: '5.5'
+      # query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
+      query: sum(increase(http_requests_total{deployment="my-deployment"}[1m]))
+
+      threshold: '5'
+      activationThreshold: '1'
     authenticationRef:
       name: azure-managed-prometheus-trigger-auth
