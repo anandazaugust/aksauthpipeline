@@ -8,6 +8,12 @@ variables:
     value: 'keda113'
   - name: TENANT_ID
     value: '17a09c66-f406-4897-8b24-51f5313623dc'
+
+parameters:
+  - name: deployScaledObject
+    type: boolean
+    default: true
+
 trigger: none
 pr: none
 pool:
@@ -46,7 +52,7 @@ jobs:
         displayName: 'Replace variables Name in Manifest'
 
       - task: AzureCLI@2
-
+        condition: parameters['deploynamespace'] == 'true'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -59,6 +65,7 @@ jobs:
         displayName: 'List AKS resources & create namespace'
 
       - task: AzureCLI@2
+        condition: parameters['deployserviceaccount'] == 'true'
 
         inputs:
           azureSubscription: 'aks-svc-june22'
@@ -71,11 +78,13 @@ jobs:
         displayName: 'Create Service Account'
 
       - task: helmInstaller@1
+        condition: parameters['deployhelm'] == 'true'
         inputs:
           helmVersionToInstall: 'latest'
         displayName: 'Install Helm'
 
       - task: AzureCLI@2
+        condition: parameters['deployhelm'] == 'true'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -88,6 +97,7 @@ jobs:
             
         displayName: 'helm repo add kedacore'
       - task: AzureCLI@2
+        condition: parameters['deployhelm'] == 'true'
         displayName: 'Install KEDA'
         inputs:
           azureSubscription: 'aks-svc-june22'
@@ -102,6 +112,7 @@ jobs:
             --set podIdentity.azureWorkload.clientId=$USER_ASSIGNED_CLIENT_ID \
             --set podIdentity.azureWorkload.tenantId=$TENANT_ID
       - task: AzureCLI@2
+        condition: parameters['deploymyapp'] == 'true'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -117,6 +128,7 @@ jobs:
 
         
       - task: AzureCLI@2
+        condition: parameters['deployScaledObject'] == 'true'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
