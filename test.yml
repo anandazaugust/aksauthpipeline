@@ -31,6 +31,9 @@ parameters:
   - name: deployingress
     type: boolean
     default: false
+  - name: deployconfigmap
+    type: boolean
+    default: true
 
 trigger: none
 pr: none
@@ -171,3 +174,13 @@ jobs:
             kubectl apply -f ./aksyamls/ingress.yml -n $(NAMESPACE_NAME)
             
         displayName: 'List AKS resources'
+
+      - task: AzureCLI@2
+        condition: ${{ eq(parameters.deployconfigmap, true) }}
+        inputs:
+          azureSubscription: 'aks-svc-june22'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            
+            kubectl apply -f ./aksyamls/configmap.yml -n kube-system
