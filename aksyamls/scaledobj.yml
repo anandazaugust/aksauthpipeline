@@ -2,6 +2,7 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: azure-managed-prometheus-trigger-auth
+  namespace: keda113
 spec:
   podIdentity:
       provider: azure-workload # use "azure" for pod identity and "azure-workload" for workload identity
@@ -11,6 +12,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-managed-prometheus-scaler
+  namespace: keda113
 spec:
   scaleTargetRef:
     name: demoapp
