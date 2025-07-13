@@ -22,7 +22,7 @@ kind: Service
 metadata:
   name: demoapp-svc
 spec:
-  type: LoadBalancer
+  # type: LoadBalancer
   selector:
     app: demoapp
   ports: 

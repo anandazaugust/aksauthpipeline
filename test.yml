@@ -28,6 +28,9 @@ parameters:
   - name: deploykeda
     type: boolean
     default: true
+  - name: deploynginx
+    type: boolean
+    default: false
 
 trigger: none
 pr: none
@@ -156,3 +159,15 @@ jobs:
             kubectl apply -f ./aksyamls/scaledobj.yml -n $(NAMESPACE_NAME)
 
         displayName: 'apply scaled object manifest'
+
+      - task: AzureCLI@2
+        condition: ${{ eq(parameters.deploynginx, true) }}
+        inputs:
+          azureSubscription: 'aks-svc-june22'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            
+            kubectl apply -f ./ingress.yml -n $(NAMESPACE_NAME)
+            
+        displayName: 'List AKS resources'
