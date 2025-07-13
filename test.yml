@@ -168,6 +168,6 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
             
-            kubectl apply -f ./ingress.yml -n $(NAMESPACE_NAME)
+            kubectl apply -f ./aksyamls/ingress.yml -n $(NAMESPACE_NAME)
             
         displayName: 'List AKS resources'
