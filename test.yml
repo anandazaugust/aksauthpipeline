@@ -28,7 +28,7 @@ parameters:
   - name: deploykeda
     type: boolean
     default: true
-  - name: deploynginx
+  - name: deployingress
     type: boolean
     default: false
 
@@ -161,7 +161,7 @@ jobs:
         displayName: 'apply scaled object manifest'
 
       - task: AzureCLI@2
-        condition: ${{ eq(parameters.deploynginx, true) }}
+        condition: ${{ eq(parameters.deployingress, true) }}
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
