@@ -2,16 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: delta
+
   
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com
-
   rules:
- 
-    http:
-      paths:
-      - backend:
-          service:
-            name: demoapp-svc
-            port:
-              number: 80
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: demoapp-svc
+                port:
+                  number: 80
