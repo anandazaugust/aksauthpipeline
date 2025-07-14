@@ -24,7 +24,8 @@ spec:
       serverAddress: https://monitor117-azaqg4hjh4fgb3hh.eastus.prometheus.monitor.azure.com
       metricName: http_requests_total
       # query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
-      query: sum(increase(http_requests_total{deployment="my-deployment"}[1m]))
+      # query: sum(increase(http_requests_total{deployment="my-deployment"}[1m]))
+      query: sum(increase(nginx_ingress_controller_nginx_process_requests_total[1m]))
 
       threshold: '5'
       activationThreshold: '1'
