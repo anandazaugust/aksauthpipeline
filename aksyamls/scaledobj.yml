@@ -21,7 +21,7 @@ spec:
   triggers:
   - type: prometheus
     metadata:
-      serverAddress: https://monitor116-hkffenegbca3gwan.eastus.prometheus.monitor.azure.com
+      serverAddress: https://monitor117-azaqg4hjh4fgb3hh.eastus.prometheus.monitor.azure.com
       metricName: http_requests_total
       # query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
       query: sum(increase(http_requests_total{deployment="my-deployment"}[1m]))
