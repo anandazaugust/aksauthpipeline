@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx  # use "nginx" only if your ingress controller was installed with this class
   rules:
-    - host: keda.alwayslearn.in
+    - host: keda2.alwayslearn.in
       http:
         paths:
           - path: /
