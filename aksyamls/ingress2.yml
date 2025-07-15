@@ -2,16 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: delta
-
-  
+  namespace: keda113  # <-- add this if your app is in keda113
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx
-  hosts:
+  ingressClassName: nginx  # use "nginx" only if your ingress controller was installed with this class
+  rules:
     - host: keda.alwayslearn.in
       http:
-        paths:
-  rules:
-    - http:
         paths:
           - path: /
             pathType: Prefix

@@ -235,6 +235,6 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
             
-            kubectl apply -f ./aksyamls/ingress.yml -n $(NAMESPACE_NAME)
+            kubectl apply -f ./aksyamls/ingress2.yml -n $(NAMESPACE_NAME)
             
         displayName: 'apply ingress manifest'
