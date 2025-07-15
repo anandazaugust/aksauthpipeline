@@ -37,9 +37,7 @@ parameters:
   - name: deploynginxhelm
     type: boolean
     default: true
-  - name: deploynginxhelm
-    type: boolean
-    default: true 
+
 
 trigger: none
 pr: none
@@ -216,13 +214,18 @@ jobs:
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: |
-            
-            helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx --namespace ingress \ 
-            --set controller.publishService.enabled=true \
-            --set controller.metrics.enabled=true \
-            --set controller.podAnnotations."prometheus\.io/scrape"="true" \
-            --set controller.podAnnotations."prometheus\.io/port"="10254"
-        displayName: 'install nginx ingress controller via helm'
+            helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+            helm repo update
+
+            helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx \
+              --namespace ingress \
+              --create-namespace \
+              --set controller.publishService.enabled=true \
+              --set controller.metrics.enabled=true \
+              --set controller.podAnnotations."prometheus\.io/scrape"="true" \
+              --set controller.podAnnotations."prometheus\.io/port"="10254"
+        displayName: 'Install NGINX ingress controller via Helm'
+
 
       - task: AzureCLI@2
         condition: ${{ eq(parameters.deployingress, true) }}
