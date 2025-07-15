@@ -237,4 +237,4 @@ jobs:
             
             kubectl apply -f ./aksyamls/ingress.yml -n $(NAMESPACE_NAME)
             
-        displayName: 'List AKS resources'
+        displayName: 'apply ingress manifest'
