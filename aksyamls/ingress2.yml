@@ -3,12 +3,12 @@ kind: Ingress
 metadata:
   name: delta
   namespace: keda113
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx
+  ingressClassName: webapprouting.kubernetes.azure.com
   rules:
-    - host: myapp.ariyans.in
+    - host: abc1.alwayslearn.in
       http:
         paths:
           - path: /
