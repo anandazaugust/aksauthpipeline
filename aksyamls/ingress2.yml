@@ -11,10 +11,10 @@ spec:
     - host: keda2.alwayslearn.in
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
+          - backend:
               service:
                 name: demoapp-svc
                 port:
                   number: 80
+            path: /
+            pathType: Prefix
