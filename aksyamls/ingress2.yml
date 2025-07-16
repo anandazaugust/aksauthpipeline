@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: aks.alwayslearn.in
+    - host: year.alwayslearn.in
       http:
         paths:
           - path: /
