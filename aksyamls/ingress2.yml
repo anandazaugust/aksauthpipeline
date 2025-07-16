@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: year.alwayslearn.in
+    - host: myapp.ariyans.in
       http:
         paths:
           - path: /
