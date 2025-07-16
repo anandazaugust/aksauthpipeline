@@ -6,10 +6,6 @@ metadata:
   
 spec:
   ingressClassName: nginx
-  hosts:
-    - host: keda.alwayslearn.in
-      http:
-        paths:
   rules:
     - http:
         paths:
