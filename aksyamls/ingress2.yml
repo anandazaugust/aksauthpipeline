@@ -2,19 +2,19 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: delta
-
-  # annotations:
-  #   nginx.ingress.kubernetes.io/rewrite-target: /
+  namespace: keda113
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx  # use "nginx" only if your ingress controller was installed with this class
+  ingressClassName: nginx
   rules:
     - host: year.alwayslearn.in
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Prefix
+            backend:
               service:
                 name: demoapp-svc
                 port:
                   number: 80
-            path: /
-            pathType: Prefix
