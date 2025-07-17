@@ -6,9 +6,9 @@ metadata:
   # annotations:
   #   nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: webapprouting.kubernetes.azure.com
+  ingressClassName: nginx
   rules:
-    - host: abc1.alwayslearn.in
+    - host: abc2.alwayslearn.in
       http:
         paths:
           - path: /

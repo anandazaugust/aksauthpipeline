@@ -219,7 +219,7 @@ jobs:
 
             helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx \
               --namespace ingress \
-              --set controller.publishService.enabled=true \
+              
               --set controller.metrics.enabled=true \
               --set controller.podAnnotations."prometheus\.io/scrape"="true" \
               --set controller.podAnnotations."prometheus\.io/port"="10254"
