@@ -236,6 +236,6 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
             
-            kubectl apply -f ./aksyamls/ingress2.yml -n keda113
+            kubectl apply -f ./aksyamls/ingress3.yml -n keda113
             
         displayName: 'apply ingress manifest'
