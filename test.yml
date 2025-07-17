@@ -37,6 +37,9 @@ parameters:
   - name: deploynginxhelm
     type: boolean
     default: true
+  - name: helmtool
+    type: boolean
+    default: true
 
 
 trigger: none
@@ -103,7 +106,7 @@ jobs:
         displayName: 'Create Service Account'
 
       - task: helmInstaller@1
-        condition:  ${{ eq(parameters.deployhelm, true) }}
+        condition:  ${{ eq(parameters.helmtool, true) }}
         inputs:
           helmVersionToInstall: 'latest'
         displayName: 'Install Helm'
