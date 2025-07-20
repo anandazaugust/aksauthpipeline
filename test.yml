@@ -184,17 +184,17 @@ jobs:
             kubectl apply -f ./aksyamls/configmap.yml -n kube-system
 
       
-      - task: AzureCLI@2
-        inputs:
-          azureSubscription: 'aks-svc-june22'
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          condition: ${{ eq(parameters.deploynginxhelm, true) }}
-          inlineScript: |
+      # - task: AzureCLI@2
+      #   inputs:
+      #     azureSubscription: 'aks-svc-june22'
+      #     scriptType: 'bash'
+      #     scriptLocation: 'inlineScript'
+      #     condition: ${{ eq(parameters.deploynginxhelm, true) }}
+      #     inlineScript: |
             
-            kubectl apply -f ./aksyamls/ingressnamespace.yml
+      #       kubectl apply -f ./aksyamls/ingressnamespace.yml
             
-        displayName: 'create ingress namespace'
+      #   displayName: 'create ingress namespace'
       
       - task: AzureCLI@2
         condition: ${{ eq(parameters.deploynginxhelm, true) }}
@@ -221,7 +221,7 @@ jobs:
             helm repo update
 
             helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx \
-              --namespace ingress \
+              --namespace $(NAMESPACE_NAME) \
               # --set controller.metrics.enabled=true \
               # --set controller.podAnnotations."prometheus\.io/scrape"="true" \
               # --set controller.podAnnotations."prometheus\.io/port"="10254"
@@ -236,6 +236,6 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
             
-            kubectl apply -f ./aksyamls/ingress2.yml -n keda113
+            kubectl apply -f ./aksyamls/ingress2.yml -n $(NAMESPACE_NAME)
             
         displayName: 'apply ingress manifest'
