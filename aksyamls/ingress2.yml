@@ -11,7 +11,7 @@ spec:
   - host: buzz.alwayslearn.in
     http:
       paths:
-      - path: /
+      - path: /app
         pathType: Prefix
         backend:
           service:
