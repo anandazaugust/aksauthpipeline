@@ -15,7 +15,7 @@ spec:
    
       containers:
       - name: devopspod
-        image: nginxdemos/hello
+        image: httpd
 ---
 apiVersion: v1
 kind: Service 
