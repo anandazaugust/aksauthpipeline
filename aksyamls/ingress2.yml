@@ -2,19 +2,18 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: delta
-  
-  # annotations:
-  #   nginx.ingress.kubernetes.io/rewrite-target: /
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
-  ingressClassName: nginx
   rules:
-    - host: buzz.alwayslearn.in
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: demoapp-svc
-                port:
-                  number: 80
+  - host: buzz.alwayslearn.in
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: demoapp-svc
+            port:
+              number: 80
+ 
