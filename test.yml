@@ -5,7 +5,7 @@ variables:
   - name: SERVICE_ACCOUNT_NAME
     value: 'kedasvc'
   - name: NAMESPACE_NAME
-    value: 'keda113'
+    value: 'kedav1'
   - name: TENANT_ID
     value: '17a09c66-f406-4897-8b24-51f5313623dc'
 
@@ -16,18 +16,14 @@ parameters:
   - name: deploymyapp
     type: boolean
     default: true
-  - name: deployhelm
-    type: boolean
-    default: true 
+
   - name: deploynamespace
     type: boolean
     default: true
   - name: deployserviceaccount 
     type: boolean
     default: true 
-  - name: deploykeda
-    type: boolean
-    default: true
+ 
   - name: deployingress
     type: boolean
     default: false
@@ -37,9 +33,7 @@ parameters:
   - name: deploynginxhelm
     type: boolean
     default: true
-  - name: helmtool
-    type: boolean
-    default: true
+  
 
 
 trigger: none
@@ -75,7 +69,7 @@ jobs:
 
       - script: |
               sed -i "s|#{SERVICE_ACCOUNT_NAME}#|$(SERVICE_ACCOUNT_NAME)|g" ./aksyamls/svc.yml
-              sed -i "s|#{NAMESPACE_NAME}#|$(NAMESPACE_NAME)|g" ./aksyamls/namespace.yml
+              sed -i "s|#{app_NAMESPACE_NAME}#|$(NAMESPACE_NAME)|g" ./aksyamls/namespace.yml
               sed -i "s|#{USER_ASSIGNED_CLIENT_ID}#|$(USER_ASSIGNED_CLIENT_ID)|g" ./aksyamls/svc.yml
         displayName: 'Replace variables Name in Manifest'
 
@@ -105,41 +99,15 @@ jobs:
             
         displayName: 'Create Service Account'
 
-      - task: helmInstaller@1
-        condition:  ${{ eq(parameters.helmtool, true) }}
-        inputs:
-          helmVersionToInstall: 'latest'
-        displayName: 'Install Helm'
+      # - task: helmInstaller@1
+      #   condition:  ${{ eq(parameters.helmtool, true) }}
+      #   inputs:
+      #     helmVersionToInstall: 'latest'
+      #   displayName: 'Install Helm'
 
-      - task: AzureCLI@2
-        condition: ${{ eq(parameters.deployhelm, true) }}
-        displayName: 'Add KEDA Helm Repo'
-        inputs:
-          azureSubscription: 'aks-svc-june22'
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
+  
             
-            helm repo add kedacore https://kedacore.github.io/charts
-            helm repo update
-            helm repo list
-            
-        
-      - task: AzureCLI@2
-        condition: ${{ eq(parameters.deployhelm, true) }}
-        displayName: 'Install KEDA'
-        inputs:
-          azureSubscription: 'aks-svc-june22'
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
-            
-            helm upgrade --install keda kedacore/keda --namespace keda113 \
-            --set serviceAccount.create=false \
-            --set serviceAccount.operator.name=$(SERVICE_ACCOUNT_NAME) \
-            --set podIdentity.azureWorkload.enabled=true \
-            --set podIdentity.azureWorkload.clientId=$USER_ASSIGNED_CLIENT_ID \
-            --set podIdentity.azureWorkload.tenantId=$TENANT_ID
+
           
 
 
@@ -217,8 +185,7 @@ jobs:
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: |
-            helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-            helm repo update
+            
 
             helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx \
               --namespace $(NAMESPACE_NAME) \
