@@ -99,20 +99,10 @@ jobs:
             
         displayName: 'Create Service Account'
 
-      # - task: helmInstaller@1
-      #   condition:  ${{ eq(parameters.helmtool, true) }}
-      #   inputs:
-      #     helmVersionToInstall: 'latest'
-      #   displayName: 'Install Helm'
-
-  
-            
-
-          
-
 
       - task: AzureCLI@2
         condition: ${{ eq(parameters.deploymyapp, true) }}
+        displayName: 'apply myapp manifest'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -121,14 +111,10 @@ jobs:
             
             kubectl apply -f ./aksyamls/myapp.yml -n $(NAMESPACE_NAME)
             
-            
-           
-            
-        displayName: 'apply myapp manifest'
-
         
       - task: AzureCLI@2
         condition: ${{ eq(parameters.deployscaledobject, true) }}
+        displayName: 'apply scaled object manifest'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -137,12 +123,9 @@ jobs:
             
             kubectl apply -f ./aksyamls/scaledobj.yml -n $(NAMESPACE_NAME)
 
-        displayName: 'apply scaled object manifest'
-
-    
-
       - task: AzureCLI@2
         condition: ${{ eq(parameters.deployconfigmap, true) }}
+        displayName: 'apply configmap manifest'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -151,53 +134,22 @@ jobs:
             
             kubectl apply -f ./aksyamls/configmap.yml -n kube-system
 
-      
-      # - task: AzureCLI@2
-      #   inputs:
-      #     azureSubscription: 'aks-svc-june22'
-      #     scriptType: 'bash'
-      #     scriptLocation: 'inlineScript'
-      #     condition: ${{ eq(parameters.deploynginxhelm, true) }}
-      #     inlineScript: |
-            
-      #       kubectl apply -f ./aksyamls/ingressnamespace.yml
-            
-      #   displayName: 'create ingress namespace'
-      
-      - task: AzureCLI@2
-        condition: ${{ eq(parameters.deploynginxhelm, true) }}
-        inputs:
-          azureSubscription: 'aks-svc-june22'
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
-            
-            helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-            helm repo update
-
-            
-        displayName: 'helm repo add ingress-nginx' 
-
+        
       - task: AzureCLI@2
         condition: ${{ eq(parameters.deploynginxhelm, true) }}  
+        displayName: 'Install NGINX ingress controller via Helm'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
-            
-
-            helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx \
-              --namespace $(NAMESPACE_NAME) \
-              --set controller.service.externalTrafficPolicy=Local \
-              --set controller.metrics.enabled=true \
-              --set controller.podAnnotations."prometheus\.io/scrape"="true" \
-              --set controller.podAnnotations."prometheus\.io/port"="10254"
-        displayName: 'Install NGINX ingress controller via Helm'
+          scriptLocation: 'scriptPath'
+          scriptPath: 'aksyamls/nginx.sh'
+          arguments: '$(NAMESPACE_NAME)'
+               
 
 
       - task: AzureCLI@2
         condition: ${{ eq(parameters.deployingress, true) }}
+        displayName: 'apply ingress manifest'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -206,4 +158,4 @@ jobs:
             
             kubectl apply -f ./aksyamls/ingress2.yml -n $(NAMESPACE_NAME)
             
-        displayName: 'apply ingress manifest'
+        
