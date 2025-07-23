@@ -2,7 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: delta
-  namespace: keda113
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
