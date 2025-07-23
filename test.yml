@@ -54,6 +54,7 @@ jobs:
         displayName: installkubelogin
       
       - task: AzureCLI@2
+        displayName: 'Get AKS credentials'
         inputs:
           azureSubscription: 'aks-svc-june22'
           scriptType: 'bash'
@@ -64,7 +65,7 @@ jobs:
             kubelogin convert-kubeconfig -l azurecli
           
         
-        displayName: 'Get AKS credentials'
+        
 
 
       - script: |
