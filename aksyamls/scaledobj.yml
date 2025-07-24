@@ -7,6 +7,7 @@ spec:
   podIdentity:
       provider: azure-workload # use "azure" for pod identity and "azure-workload" for workload identity
       identityId: #{USER_ASSIGNED_CLIENT_ID}#  
+      tenantId: "17a09c66-f406-4897-8b24-51f5313623dc"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
