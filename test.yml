@@ -72,6 +72,7 @@ jobs:
               sed -i "s|#{SERVICE_ACCOUNT_NAME}#|$(SERVICE_ACCOUNT_NAME)|g" ./aksyamls/svc.yml
               sed -i "s|#{app_NAMESPACE_NAME}#|$(NAMESPACE_NAME)|g" ./aksyamls/namespace.yml
               sed -i "s|#{USER_ASSIGNED_CLIENT_ID}#|$(USER_ASSIGNED_CLIENT_ID)|g" ./aksyamls/svc.yml
+              sed -i "s|#{USER_ASSIGNED_CLIENT_ID}#|$(USER_ASSIGNED_CLIENT_ID)|g" ./aksyamls/scaledobj.yml
         displayName: 'Replace variables Name in Manifest'
 
       - task: AzureCLI@2
