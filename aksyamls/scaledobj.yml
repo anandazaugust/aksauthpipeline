@@ -17,8 +17,8 @@ metadata:
 spec:
   scaleTargetRef:
     name: demoapp
-  minReplicaCount: 1
-  maxReplicaCount: 20
+  minReplicaCount: 0
+  maxReplicaCount: 1
   triggers:
   - type: prometheus
     metadata:
