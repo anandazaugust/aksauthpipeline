@@ -22,7 +22,7 @@ spec:
   triggers:
   - type: prometheus
     metadata:
-      serverAddress: https://monitor200-h2dud6fnddd3abec.eastus.prometheus.monitor.azure.com
+      serverAddress: https://monitorbase-h6aseqahbbawfdb7.uksouth.prometheus.monitor.azure.com
       metricName: nginx_ingress_controller_requests
       # query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
       # query: sum(increase(http_requests_total{deployment="my-deployment"}[1m]))
